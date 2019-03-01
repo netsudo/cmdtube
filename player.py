@@ -10,12 +10,12 @@ class Player:
     def __init__(self, music_stream_url):
         self.music_stream_url = music_stream_url
         self.volume = 0.1
-        self.__start_player()
+        self.__init_player()
 
     def stop_player(self):
         self.player.set_state(gst.State.NULL)
 
-    def __start_player(self):
+    def __init_player(self):
         def on_tag(bus, msg):
             taglist = msg.parse_tag()
             print('on_tag:')

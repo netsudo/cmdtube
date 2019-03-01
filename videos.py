@@ -1,12 +1,11 @@
 import requests
-import html
+from lxml import html as lx
 
 
 class Videos:
     def __init__(self, search):
         self.search = search
-        self.key = self.__api_key()
-        self.search_url = 'https://www.googleapis.com/youtube/v3/search?key={}&part=snippet&maxResults=25&q={}&type=video'.format(self.key, self.search)
+        self.search_url = 'https://www.youtube.com/results?search_query={}'.format(self.search)
         self.videos = self.__search_results()
 
     def list_videos(self):
@@ -15,23 +14,18 @@ class Videos:
 
     def __search_results(self):
         r = requests.get(self.search_url)
-        full_results = r.json()["items"]
+        tree = lx.fromstring(r.text)
+        elems = tree.xpath(".//a[contains\
+                    (@class, 'yt-uix-tile-link')]")
         results = {}
 
         count = 1
-        for i in full_results:
-            title = html.unescape(i["snippet"]["title"])
-            url = 'https://www.youtube.com/watch?v='\
-                + i["id"]["videoId"]
+        for i in elems:
+            title = i.get('title')
+            # Strip off /watch?v=
+            url = i.get('href')[9:]
 
             results[count] = [title, url]
             count += 1
 
         return results
-
-    def __api_key(self):
-        f = open('env.key')
-        key = f.readline()
-        f.close()
-
-        return key.strip()

@@ -25,8 +25,10 @@ def main():
     if option == 's':
         stream.stop_player()
         main()
+
     elif option == 'e':
         sys.exit(0)
+
     else:
         print("\nType (s) to re-search, (e) to exit\n> ")
 
