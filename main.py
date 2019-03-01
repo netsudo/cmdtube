@@ -12,19 +12,26 @@ def selection(videos):
     return best.url
 
 
-def main():
-    search = input("Search videos: ")
-    v = Videos(search)
-    v.list_videos()
+def main(replay=''):
+    if replay == '':
+        search = input("Search videos: ")
+        v = Videos(search)
+        v.list_videos()
+        music_stream_url = selection(v.videos)
+    else:
+        music_stream_url = replay
 
-    music_stream_url = selection(v.videos)
     stream = Player(music_stream_url)
 
-    option = input("\nType (s) to re-search, (e) to exit\n> ")
+    option = input("\nType (s) to re-search, (r) to replay, (e) to exit\n> ")
 
     if option == 's':
         stream.stop_player()
         main()
+
+    elif option == 'r':
+        stream.stop_player()
+        main(music_stream_url)
 
     elif option == 'e':
         sys.exit(0)
