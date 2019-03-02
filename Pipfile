@@ -10,6 +10,7 @@ lxml = "*"
 requests = "*"
 youtube-dl = "*"
 pafy = "*"
+vext = "*"
 
 [requires]
 python_version = "3.7"
