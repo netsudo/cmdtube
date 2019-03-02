@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "22775cf07f64beddb0f38e269182d97295459e057c08898f767914e1515e40c8"
+            "sha256": "4a5b997fd3c0d981da865fe8358c6f9c1edaf852fc7d15f24468dce6b303076e"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -125,6 +125,13 @@
             ],
             "index": "pypi",
             "version": "==0.7.3"
+        },
+        "vext.gi": {
+            "hashes": [
+                "sha256:ec9fab2e736b4466c08460c063ea362782e9a0f63544faa9d5681308dc74bb3d"
+            ],
+            "index": "pypi",
+            "version": "==0.7.0"
         },
         "youtube-dl": {
             "hashes": [

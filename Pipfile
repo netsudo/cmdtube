@@ -11,6 +11,7 @@ requests = "*"
 youtube-dl = "*"
 pafy = "*"
 vext = "*"
+"vext.gi" = "*"
 
 [requires]
 python_version = "3.7"
