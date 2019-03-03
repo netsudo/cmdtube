@@ -7,9 +7,6 @@ git clone https://github.com/netsudo/cmdtube.git
 cd cmdtube
 python3 -m venv env
 source env/bin/activate
-pip install pipenv
-pipenv install
-pip install vext vext.gi
+pip install -r requirements.txt
 python src/main.py
 ```
-Need to work on a better setup, currently pipenv is giving me difficulties installing vext.gi for whichever reason.
