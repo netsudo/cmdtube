@@ -16,3 +16,6 @@ class Song(BaseModel):
     playlist = ForeignKeyField(Playlist, backref="songs")
     name = CharField()
     url = CharField()
+
+
+db.create_tables([Playlist, Song])
