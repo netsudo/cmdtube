@@ -1,17 +1,18 @@
-from peewee import *
+from peewee import Model, SqliteDatabase, CharField, ForeignKeyField
 
 db = SqliteDatabase("../playlists.db")
 
-class Playlist(Model):
-    name = CharField()
 
+class BaseModel(Model):
     class Meta:
         database = db
 
-class Song(Model):
+
+class Playlist(BaseModel):
+    name = CharField()
+
+
+class Song(BaseModel):
     playlist = ForeignKeyField(Playlist, backref="songs")
     name = CharField()
     url = CharField()
-
-    class Meta:
-        database = db
