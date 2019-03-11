@@ -12,6 +12,17 @@ def add_playlist(name):
     playlist.save()
 
 
+def list_playlists():
+    select = {}
+    count = 1
+
+    for p in Playlist.select():
+        select[count] = p.name
+        count += 1
+
+    return select
+
+
 def list_songs(playlist=None):
     if playlist is None:
         # Return songs of every playlist
@@ -30,7 +41,7 @@ def song_select_format(song_obj):
     count = 1
 
     for song in song_obj:
-        songs[count] = [song.id, song.name, song.playlist.name]
+        songs[count] = [song.id, song.name, song.url, song.playlist.name]
         count += 1
 
     return songs
