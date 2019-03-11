@@ -1,6 +1,8 @@
 import gi
+from threading import Thread
 gi.require_version('Gst', '1.0')
 from gi.repository import Gst as gst
+from gi.repository import GLib
 
 
 class Player:
@@ -10,17 +12,24 @@ class Player:
     def __init__(self, music_stream_url):
         self.music_stream_url = music_stream_url
         self.volume = 0.1
-        self.__init_player()
+        self.thread = None
+        self.loop = GLib.MainLoop()
+        self.is_running = False
 
     def stop_player(self):
         self.player.set_state(gst.State.NULL)
+        self.loop.quit()
+        self.is_running = False
+
+    def start_player(self):
+        self.thread = Thread(target=self.__init_player)
+        self.thread.daemon = True
+        self.thread.start()
+        self.is_running = True
 
     def __init_player(self):
-        def on_tag(bus, msg):
-            taglist = msg.parse_tag()
-            print('on_tag:')
-            for key in taglist.keys():
-                print('\t%s = %s' % (key, taglist[key]))
+        def handle_stop(bus, msg):
+            self.stop_player()
 
         # Set the url and volume and start player
         self.player.set_property('volume', self.volume)
@@ -32,4 +41,7 @@ class Player:
         bus.enable_sync_message_emission()
         bus.add_signal_watch()
 
-        bus.connect('message::tag', on_tag)
+        bus.connect('message::eos', handle_stop)
+        bus.connect('message::error', handle_stop)
+
+        self.loop.run()

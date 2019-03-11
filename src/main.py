@@ -1,5 +1,6 @@
 import sys
 import pafy
+import playlist
 from videos import Videos
 from player import Player
 
@@ -12,17 +13,7 @@ def selection(videos):
     return best.url
 
 
-def main(replay=''):
-    if replay == '':
-        search = input("Search videos: ")
-        v = Videos(search)
-        v.list_videos()
-        music_stream_url = selection(v.videos)
-    else:
-        music_stream_url = replay
-
-    stream = Player(music_stream_url)
-
+def options(stream, music_stream_url):
     option = input("\nType (s) to re-search, (r) to replay, (e) to exit\n> ")
 
     if option == 's':
@@ -33,11 +24,28 @@ def main(replay=''):
         stream.stop_player()
         main(music_stream_url)
 
+    elif option == 'p':
+        print("hello")
+
     elif option == 'e':
-        sys.exit(0)
+        sys.exit(1)
 
     else:
         print("\nType (s) to re-search, (e) to exit\n> ")
+
+
+def main(replay=''):
+    if replay == '':
+        search = input("Search videos: ")
+        v = Videos(search)
+        v.list_videos()
+        music_stream_url = selection(v.videos)
+    else:
+        music_stream_url = replay
+
+    stream = Player(music_stream_url)
+    stream.start_player()
+    options(stream, music_stream_url)
 
 
 if __name__ == '__main__':
